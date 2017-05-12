@@ -106,6 +106,21 @@ var WebView = cc.Class({
         }
     },
 
+    sendMessage:function(msg){
+        console.log("Running test me");
+        this._sgNode.sendMessage(msg);
+    },
+
+    evaluateJS:function(jsString){
+        // native only
+        // evalling...
+        this._sgNode.evaluateJS(jsString);
+    },
+
+    addPostMessageCallback:function(cb){
+        this._sgNode.addPostMessageCallback(cb);
+    },
+
     _createSgNode: function () {
         if(CC_JSB) {
             if (cc.sys.os === cc.sys.OS_OSX || cc.sys.os === cc.sys.OS_WINDOWS) {
