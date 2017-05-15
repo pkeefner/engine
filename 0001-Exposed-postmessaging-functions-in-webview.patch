@@ -1,0 +1,68 @@
+From 6319eb6cc56552f826410f8fa387cd8dfb32ae62 Mon Sep 17 00:00:00 2001
+From: Phil <pkeefner@idreaminteractive.com>
+Date: Fri, 12 May 2017 13:01:32 -0400
+Subject: [PATCH 1/1] Exposed postmessaging functions in webview.
+
+---
+ cocos2d/core/components/CCWebView.js | 15 +++++++++++++++
+ cocos2d/core/webview/CCSGWebView.js  | 18 ++++++++++++++++++
+ 2 files changed, 33 insertions(+)
+
+diff --git a/cocos2d/core/components/CCWebView.js b/cocos2d/core/components/CCWebView.js
+index f963c2d7..9e019bdf 100644
+--- a/cocos2d/core/components/CCWebView.js
++++ b/cocos2d/core/components/CCWebView.js
+@@ -106,6 +106,21 @@ var WebView = cc.Class({
+         }
+     },
+ 
++    sendMessage:function(msg){
++        console.log("Running test me");
++        this._sgNode.sendMessage(msg);
++    },
++
++    evaluateJS:function(jsString){
++        // native only
++        // evalling...
++        this._sgNode.evaluateJS(jsString);
++    },
++
++    addPostMessageCallback:function(cb){
++        this._sgNode.addPostMessageCallback(cb);
++    },
++
+     _createSgNode: function () {
+         if(CC_JSB) {
+             if (cc.sys.os === cc.sys.OS_OSX || cc.sys.os === cc.sys.OS_WINDOWS) {
+diff --git a/cocos2d/core/webview/CCSGWebView.js b/cocos2d/core/webview/CCSGWebView.js
+index d83912fd..7ed67074 100644
+--- a/cocos2d/core/webview/CCSGWebView.js
++++ b/cocos2d/core/webview/CCSGWebView.js
+@@ -52,6 +52,24 @@ _ccsg.WebView = _ccsg.Node.extend(/** @lends _ccsg.WebView# */{
+         cc.logID(7800);
+     },
+ 
++    sendMessage:function(msg){
++        var iframe = this._renderCmd._iframe;
++        if (iframe){
++            console.log("got iframe");
++
++            var win = iframe.contentWindow;
++            console.log("win", win);
++            if (win){
++                win.postMessage(msg, '*');
++            }
++        }
++    },
++
++    addPostMessageCallback:function(cb){
++        // add it into the frame
++        window.addEventListener("message", cb, false);
++    },
++
+     /**
+      * Reload the WebView
+      */
+-- 
+2.11.0 (Apple Git-81)
+
