@@ -177,7 +177,7 @@ cc.WebView = module.exports = WebView;
  * !#zh
  * 注意：此事件是从该组件所属的 Node 上面派发出来的，需要用 node.on 来监听。
  * @event loaded
- * @param {Event} event
+ * @param {Event.EventCustom} event
  * @param {WebView} event.detail - The WebView component.
  */
 
@@ -187,7 +187,7 @@ cc.WebView = module.exports = WebView;
  * !#zh
  * 注意：此事件是从该组件所属的 Node 上面派发出来的，需要用 node.on 来监听。
  * @event loading
- * @param {Event} event
+ * @param {Event.EventCustom} event
  * @param {WebView} event.detail - The WebView component.
  */
 
@@ -197,6 +197,6 @@ cc.WebView = module.exports = WebView;
  * !#zh
  * 注意：此事件是从该组件所属的 Node 上面派发出来的，需要用 node.on 来监听。
  * @event error
- * @param {Event} event
+ * @param {Event.EventCustom} event
  * @param {WebView} event.detail - The WebView component.
  */
