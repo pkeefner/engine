@@ -53,6 +53,24 @@ _ccsg.WebView = _ccsg.Node.extend(/** @lends _ccsg.WebView# */{
         cc.logID(7800);
     },
 
+    sendMessage:function(msg){
+    	var iframe = this._renderCmd._iframe;
+    	if(iframe){
+    		console.log("got iframe");
+
+    		var win = iframe.contentWindow;
+    		console.log("win", win);
+    		if (win){
+    			win.postMessage(msg, '*');
+    		}
+    	}
+    },
+
+    addPostMessageCallback:function(cb){
+    	// add it into the frame
+    	window.addEventListener("message", cb, false);
+    },
+
     /**
      * Reload the WebView
      */
